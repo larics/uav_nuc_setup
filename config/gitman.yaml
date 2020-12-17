@@ -1,0 +1,54 @@
+location: .gitman
+
+sources:
+  - name: mav_comm
+    type: git
+    repo: https://github.com/larics/mav_comm
+    sparse_paths:
+    -
+    rev: master
+    link: src/mav_comm
+    scripts:
+    - 
+
+  - name: erl_drone
+    type: git
+    repo: https://github.com/larics/erl_drone
+    sparse_paths:
+    -
+    rev: master
+    link: src/erl_drone
+    scripts:
+    -
+
+  - name: uav_ros_control
+    type: git
+    repo: https://github.com/larics/uav_ros_control
+    sparse_paths:
+    -
+    rev: master-v3
+    link: src/uav_ros_control
+    scripts:
+    -
+
+  - name: multirotor_transformations
+    type: git
+    repo: https://github.com/larics/multirotor_transformations
+    sparse_paths:
+    -
+    rev: erl_uav_master
+    link: src/multirotor_transformations
+    scripts:
+    -
+
+  - name: topp_ros
+    type: git
+    repo: https://github.com/larics/topp_ros
+    sparse_paths:
+    -
+    rev: nuc-onboard
+    link: src/topp_ros
+    scripts:
+    -
+
+groups: []
