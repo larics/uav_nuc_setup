@@ -124,7 +124,7 @@ function usb_setup {
     echo "SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"$idVendor\", ATTRS{idProduct}==\"$idProduct\", ATTRS{serial}==\"$serial\", SYMLINK+=\"ttyUSB_px4\"" | sudo tee -a "$usb_conf" > /dev/null
   fi
 
-  sudo adduser $USER_NAME dialout |& _log_trace "(USB)"
+  sudo adduser $USER dialout |& _log_trace "(USB)"
 
   if [[ $exit_status -ne 0 ]]; then
     _log_error "Something went wrong while adding the user to dialout group."
