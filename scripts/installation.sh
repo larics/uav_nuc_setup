@@ -298,7 +298,7 @@ function install_packages {
     cd -- "$WORKSPACE_PATH" && \
     wstool init src |& _log_trace "(CTK)"  && \
     rosinstall_generator --rosdistro $ROS_DISTRO mavlink | tee /tmp/mavros.rosinstall |& _log_trace "(CTK)"  && \
-    rosinstall_generator --upstream mavros | tee -a /tmp/mavros.rosinstall |& _log_trace "(CTK)"  && \
+    rosinstall_generator --rosdistro $ROS_DISTRO --upstream mavros | tee -a /tmp/mavros.rosinstall |& _log_trace "(CTK)"  && \
     wstool merge -t src /tmp/mavros.rosinstall |& _log_trace "(CTK)"  && \
     wstool update -t src -j4 |& _log_trace "(CTK)"  && \
     rosdep install --from-paths src --ignore-src -y |& _log_trace "(CTK)"  && \

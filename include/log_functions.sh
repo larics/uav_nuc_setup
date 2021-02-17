@@ -42,7 +42,7 @@ function _init_logging()
   # Initialize phase 2
   # Only variables necessary for logging & start logging
   # Script related variables are defined in _init_script_variables
-  readonly log_file="$dir"/logs/after-effects-$(date +"%d%m%y_%H%M").log
+  readonly log_file="$dir"/logs/nuc-setup-$(date +"%d%m%y_%H%M").log
   {
     mkdir -p "$dir"/logs
   } ||
