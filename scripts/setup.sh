@@ -147,7 +147,7 @@ function workspace_setup {
 
   # Set the name and path of the main workspace.
   WORKSPACE_NAME=larics_ws
-  WORKSPACE_PATH=~/WS/$WORKSPACE_NAME
+  WORKSPACE_PATH=~/$WORKSPACE_NAME
   _log_inform "Workspace path is $WORKSPACE_PATH"
 
   # If workspace already exists, exit.
