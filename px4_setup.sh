@@ -92,20 +92,6 @@ password=$g_password
 # -------------------------------------------------------------------
 
 
-# ------------------------- SYSTEM SETUP ----------------------------
-  _log_stage "Setting up the system"
-
-  # Disable WiFi power saving.
-  disable_wifi_powersave;
-
-  # Populate .basrhc.
-  populate_bashrc;
-
-  # Set up symbolic links for Pixhawk USB port.
-  usb_setup;
-# -------------------------------------------------------------------
-
-
 # ------------------------ INSTALLATION -----------------------------
   _log_stage "Installation"
 
@@ -126,6 +112,20 @@ password=$g_password
 
   # Install gitman.
   install_gitman;
+# -------------------------------------------------------------------
+
+
+# ------------------------- SYSTEM SETUP ----------------------------
+  _log_stage "Setting up the system"
+
+  # Disable WiFi power saving.
+  disable_wifi_powersave;
+
+  # Populate .basrhc.
+  populate_bashrc;
+
+  # Set up symbolic links for Pixhawk USB port.
+  usb_setup;
 # -------------------------------------------------------------------
 
 
@@ -156,7 +156,7 @@ password=$g_password
   cleanup;
 
   _log_cleanup "Autoremoving unnecessary apt packages."
-  sudo apt-get autoremove |& _log_trace "(FIN)"
+  sudo apt-get autoremove -y |& _log_trace "(FIN)"
 
   exit_status=$?
   if [[ ! $exit_status -eq 0 ]]; then

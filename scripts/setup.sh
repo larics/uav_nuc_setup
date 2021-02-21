@@ -44,12 +44,16 @@ function populate_bashrc {
 # ROS WORKSPACES">> ~/.bashrc
   fi
 
+  ip=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')
+
   # Add UAV namespace. Very important for correct functioning of ROS packages.
   num=`cat ~/.bashrc | grep "UAV_NAMESPACE" | wc -l`
   if [ "$num" -lt "1" ]; then
     echo "
 # ROS namespace used in all nodes.
-export UAV_NAMESPACE=$USER" >> ~/.bashrc
+export UAV_NAMESPACE=$USER
+export ROS_MASTER_URI=http://$ip:11311
+export ROS_IP=$ip" >> ~/.bashrc
   fi
 
   # Add useful aliases.
