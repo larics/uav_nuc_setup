@@ -1,7 +1,7 @@
 #!/bin/bash
 
 alias cd..='cd ..'
-
+alias cbt='catkin build --this'
 alias re-source='source ~/.bashrc'
 
 # Short commands for common tools.

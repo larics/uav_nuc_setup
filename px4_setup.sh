@@ -59,6 +59,34 @@ function main {
   done 2>/dev/null &
   _log_success "Got root privileges"  
 
+
+  local after_effects_core_dependencies=(wget whiptail ping ps grep cut tr awk)
+  _check_dependencies "${after_effects_core_dependencies[@]}"
+
+  _init_script_variables;
+
+  _init_print_basic_info;
+
+  # I don't like when someone else is occupying my room
+  # Test if any apt-get ops are running
+  _test_conflicting_apps;
+
+  # Did I tell you that I need to call My friends over internet?
+  _test_internet_connection;
+
+  # It is smarter to run this in TMUX in case of connectivity issues.
+  if [ -z ${TMUX+x} ]
+  then 
+    _log_warn "Please consider running the script from TMUX."
+    _log_info "Do you want to try again with TMUX?"
+    select yn in "Yes, install tmux and try again." "No, just continue."; do
+      case $yn in
+          "Yes, install tmux and try again.") sudo apt install tmux; exit 0;;
+          "No, just continue.") break;;
+      esac
+    done
+  fi
+
   _log_info "Please enter GitHub credentials"
   git config --global user.name "$USER"
   git config --global user.email "kopterworx.$USER@air.com"
@@ -74,21 +102,6 @@ password=$g_password
 " | git credential approve
   
   _log_success "Successfully stored GitHub credentials"
-
-
-  local after_effects_core_dependencies=(wget whiptail ping ps grep cut tr awk)
-  _check_dependencies "${after_effects_core_dependencies[@]}"
-
-  _init_script_variables;
-
-  _init_print_basic_info;
-
-  # I don't like when someone else is occupying my room
-  # Test if any apt-get ops are running
-  _test_conflicting_apps;
-
-  # Did I tell you that I need to call My friends over internet?
-  _test_internet_connection;
 # -------------------------------------------------------------------
 
 
