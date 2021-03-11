@@ -51,4 +51,44 @@ sources:
     scripts:
     -
 
+  - name: ros_vrpn_client
+    type: git
+    repo: https://github.com/ethz-asl/ros_vrpn_client.git
+    sparse_paths:
+    -
+    rev: master
+    link: src/ros_vrpn_client
+    scripts:
+    -
+
+  - name: vrpn_catkin
+    type: git
+    repo: https://github.com/ethz-asl/vrpn_catkin.git
+    sparse_paths:
+    -
+    rev: master
+    link: src/vrpn_catkin
+    scripts:
+    -
+
+  - name: catkin_simple
+    type: git
+    repo: https://github.com/catkin/catkin_simple.git
+    sparse_paths:
+    -
+    rev: master
+    link: src/catkin_simple
+    scripts:
+    -
+
+  - name: glog_catkin
+    type: git
+    repo: https://github.com/ethz-asl/glog_catkin.git
+    sparse_paths:
+    -
+    rev: master
+    link: src/glog_catkin
+    scripts:
+    -
+
 groups: []

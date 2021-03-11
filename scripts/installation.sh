@@ -231,22 +231,6 @@ function install_packages {
   [ "$distro" = "18.04" ] && ROS_DISTRO="melodic"
   [ "$distro" = "20.04" ] && ROS_DISTRO="noetic"
 
-  # Install catkin_simple.
-  _log_inform "catkin_simple"
-  if [[ ! -d "$WORKSPACE_PATH/src/catkin_simple" ]]; then
-    ( \
-    cd -- "$WORKSPACE_PATH/src" && \
-    git clone https://github.com/catkin/catkin_simple |& _log_trace "(CTK)" \
-    )
-
-    exit_status=$?
-    if [[ $exit_status -ne 0 ]]; then
-      _log_error "Something went wrong while cloning catkin_simple."
-      _log_and_exit "Please see the log file for more details." "61"
-      return
-    fi
-  fi
-
   # Install Velodyne drivers.
   _log_inform "velodyne"
   if [[ ! -d "$WORKSPACE_PATH/src/velodyne" ]]; then
@@ -313,7 +297,7 @@ function install_packages {
     fi
   fi
 
-  # Clone LARICS packages using gitman.
+  # Clone LARICS & friends packages using gitman.
   _log_inform "LARICS packages"
   ( \
     cd -- "$WORKSPACE_PATH" && \
