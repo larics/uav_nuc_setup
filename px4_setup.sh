@@ -81,7 +81,7 @@ function main {
     _log_info "Do you want to try again with TMUX?"
     select yn in "Yes, install tmux and try again." "No, just continue."; do
       case $yn in
-          "Yes, install tmux and try again.") sudo apt install tmux; exit 0;;
+          "Yes, install tmux and try again.") sudo apt-get install tmux -y > /dev/null; _log_success "Done. Start TMUX and run again."; exit 0;;
           "No, just continue.") break;;
       esac
     done
@@ -110,6 +110,9 @@ password=$g_password
 
   # Disable WiFi power saving.
   disable_wifi_powersave;
+
+  # Modify /etc/hosts.
+  modify_etc_hosts;
 
   # Populate .basrhc.
   populate_bashrc;

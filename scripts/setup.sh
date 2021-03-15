@@ -23,6 +23,47 @@ wifi.powersave = 2" | sudo tee -a "$wifi_conf" > /dev/null
   fi
 }
 
+# This function will populate the /etc/hosts file with appropriate values.
+function modify_etc_hosts {
+  _log_info "Modifying /etc/hosts."
+
+  # /etc/hosts should look like this:
+  #  127.0.0.1       localhost
+  #  127.0.1.1       $USER
+  #  127.0.0.1       $USER.local
+  #
+  #  ::1     ip6-localhost ip6-loopback
+  #  fe00::0 ip6-localnet
+  #  ff00::0 ip6-mcastprefix
+  #  ff02::1 ip6-allnodes
+  #  ff02::2 ip6-allrouters  
+
+  num=`cat /etc/hosts | grep -E "(^|\s)localhost($|\s)" | wc -l`
+  if [ "$num" -lt "1" ]; then
+    sudo sed -i "1i127.0.0.1\tlocalhost" /etc/hosts |& _log_trace "(hosts)"
+  fi
+  exit_status=$?
+
+  num=`cat /etc/hosts | grep -E "(^|\s)$USER($|\s)" | wc -l`
+  if [ "$num" -lt "1" ]; then
+    sudo sed -i "2i127.0.1.1\t$USER" /etc/hosts |& _log_trace "(hosts)"
+  fi
+  (( exit_status = exit_status || $? ))
+
+  num=`cat /etc/hosts | grep -E "(^|\s)$USER.local($|\s)" | wc -l`
+  if [ "$num" -lt "1" ]; then
+    sudo sed -i "3i127.0.0.1\t$USER.local" /etc/hosts |& _log_trace "(hosts)"
+  fi
+  (( exit_status = exit_status || $? ))
+
+  if [[ $exit_status -eq 0 ]]; then
+    _log_success "Done"
+  else
+    _log_error "Something went wrong while modifying /etc/hosts."
+    _log_error "Please see the log file for more details."
+  fi
+}
+
 # This function will populate .bashrc with some required and useful stuff.
 function populate_bashrc {
   _log_info "Modifying .bashrc with recommended additions."
@@ -52,8 +93,9 @@ function populate_bashrc {
     echo "
 # ROS namespace used in all nodes.
 export UAV_NAMESPACE=$USER
-export ROS_MASTER_URI=http://$ip:11311
-export ROS_IP=$ip" >> ~/.bashrc
+export ROS_MASTER_URI=http://$USER.local:11311
+export ROS_HOSTNAME=$USER.local
+export ROS_IP=$USER.local  # FYI, my static IP is: $ip" >> ~/.bashrc
   fi
 
   # Add useful aliases.
