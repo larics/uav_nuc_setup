@@ -31,39 +31,51 @@ This is done to prevent connectivity loss in critical situations. The script wil
 wifi.powersave = 2
 ```
 
-**6. Create a backup of the default .bashrc in "backup" folder.**
+**6. Disable automatic updates.**  
+The script will write the following to `/etc/apt/apt.conf.d/20auto-upgrades`:
+```
+APT::Periodic::Update-Package-Lists "0";
+APT::Periodic::Download-Upgradeable-Packages "0";
+APT::Periodic::AutocleanInterval "0";
+APT::Periodic::Unattended-Upgrade "0";
+```
 
-**7. Add following things to the .bashrc:**
+**7. Create a backup of the default .bashrc in "backup" folder.**
+
+**8. Add following things to the .bashrc:**
    - Sourcing of ROS and the custom workspace
    - Useful aliases (look [here](shell_additions/aliases.sh))
    - Useful shell additions (look [here](shell_additions/shell_scripts.sh))
    - Custom git commands (look [here](shell_additions/git_commands.sh))
-   
-**8. Symlink Pixhawk USB.**  
+
+**9. Add a .nanorc config file to home directory.**
+It adds line numbers to nano editor :O
+
+**10. Symlink Pixhawk USB.**  
 As described [here](https://dev.px4.io/v1.11/en/companion_computer/pixhawk_companion.html#software-setup-on-linux).
 
-**9. Install essential programs, tools and dependencies.**  
+**11. Install essential programs, tools and dependencies.**  
 This includes upgrading all currently installed packages and installing things like wget, curl, zip, etc.
 
-**10. Install ROS.**  
+**12. Install ROS.**  
 This includes adding ROS repositories and keys, installing dependencies, base version of ROS and most common packages, and initializing rosdep.
 
-**11. Install general packages.**  
+**13. Install general packages.**  
 This includes things like build tools, Python packages, and general libraries.
 
-**10. Install various tools and utilities.**  
+**14. Install various tools and utilities.**  
 This includes things like ranger, htop, tmux, nmap, net-tools, openssh etc.
 
-**11. Install gitman.**  
+**15. Install gitman.**  
 Gitman is used for managing git repositories.
 
-**12. Create a new catkin workspace.**  
+**16. Create a new catkin workspace.**  
 This workspace will be placed in `home` folder and is named `larics_ws`. Only the basic, common packages essential for a functioning UAV should be placed here. When developing and testing new packages, users should create their own workspaces and set up [workspace overlaying](http://wiki.ros.org/catkin/Tutorials/workspace_overlaying).
 
-**13. Download and build all of the essential packages for UAVs.**  
+**17. Download and build all of the essential packages for UAVs.**  
 Gitman is used for this step.
 
-**14. Clean up after itself.**  
+**18. Clean up after itself.**  
 Git credential menager's cache is erased and cache timeout is set to 15 minutes. Apt will autoremove any unneccessary packages.  
 Cleanup is executed even in the event of abnormal script termination.
 
