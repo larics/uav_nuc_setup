@@ -111,6 +111,9 @@ password=$g_password
   # Disable WiFi power saving.
   disable_wifi_powersave;
 
+  # Disable automatic updates.
+  disable_automatic_updates;
+
   # Modify /etc/hosts.
   modify_etc_hosts;
 

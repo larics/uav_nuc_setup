@@ -23,6 +23,26 @@ wifi.powersave = 2" | sudo tee -a "$wifi_conf" > /dev/null
   fi
 }
 
+# This function will disable automatic updates.
+function disable_automatic_updates {
+  updates_conf="/etc/apt/apt.conf.d/20auto-upgrades"
+
+  _log_info "Disabling automatic updates."
+
+  echo "APT::Periodic::Update-Package-Lists \"0\";
+APT::Periodic::Download-Upgradeable-Packages \"0\";
+APT::Periodic::AutocleanInterval \"0\";
+APT::Periodic::Unattended-Upgrade \"0\";" | sudo tee "$updates_conf" > /dev/null
+
+  exit_status=$?
+  if [[ $exit_status -eq 0 ]]; then
+    _log_success "Done"
+  else
+    _log_error "Something went wrong while disabling automatic updates."
+    _log_error "Please see the log file for more details."
+  fi
+}
+
 # This function will populate the /etc/hosts file with appropriate values.
 function modify_etc_hosts {
   _log_info "Modifying /etc/hosts."
@@ -129,6 +149,11 @@ source $TEMP/shell_scripts.sh" >> ~/.bashrc
     echo "
 # Shell scripts for custom Git commands.
 source $TEMP/git_scripts.sh" >> ~/.bashrc
+  fi
+
+  # Create a symlink of the nano config file in home directory.
+  if [[ ! -f ~/.nanorc ]]; then
+    ln -s $dir/shell_additions/.nanorc ~/.nanorc
   fi
 
   _log_success "Done"
